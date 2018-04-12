@@ -5,8 +5,9 @@ var rightPressed = false;
 var leftPressed = false;
 var upPressed = false;
 var downPressed = false;
-var startX;
-var startY;
+var startX = (canvas.width/2)-(radius/2);
+var startY = (canvas.height/2)-(radius-2) ;
+var d = 5;
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
@@ -46,25 +47,40 @@ function keyUpHandler(e){
   }
 
 }
+/*
+function collision(){
+  if(startX < )
 
+
+
+}
+*/
 
 function drawSmallBox(){
 ctx.beginPath();
-ctx.rect((canvas.width/2)-(radius/2),(canvas.height/2)-(radius-2),radius,radius);
+ctx.rect(startX,startY,radius,radius);
 ctx.fillStyle = "red";
 ctx.fill();
 ctx.closePath();
 }
-drawSmallBox();
+
 
 
 function draw(){
-c.clearRect(0,0,canvas.width,canvas.height);
-if(rightPressed && startX <= canvas.height-radius){
-  startX += 7;
+ctx.clearRect(0,0,canvas.width,canvas.height);
+drawSmallBox();
+if(leftPressed){
+    startX = startX-d;
 }
-else if(leftPressed && startX < 0){
-  startX -=7;
+else if(rightPressed){
+  startX = startX+d;
 }
-
+else if(upPressed){
+  startY = startY-d;
 }
+else if(downPressed){
+  startY = startY+d;
+}
+requestAnimationFrame(draw);
+}
+draw();
